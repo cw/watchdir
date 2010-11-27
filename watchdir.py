@@ -38,8 +38,11 @@ def write_to_zip():
         print info.filename, info.date_time, info.file_size, info.compress_size
 
 def upload_file(path):
+    """
+    Only upload html files that are not named all.html
+    """
     if path.lower().endswith("html") and "all.html" not in path:
-        print "uploading", path
+        #print "uploading", path
         h = httplib2.Http()
         f = open(path, "r")
         try:
@@ -50,7 +53,7 @@ def upload_file(path):
         data = {'contents': s, "filename": os.path.split(path)[1], "timestamp": timestamp}
         body = urllib.urlencode(data)
         resp, content = h.request(URL, "POST", body=body)
-        print resp, content
+        print content
 
 def upload_files():
     """
